@@ -1,31 +1,18 @@
-
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from db import engine
-from models import Base
-from routes import router
 
+app = FastAPI()
 
-import sys
-from pathlib import Path
+# Root route
+@app.get("/")
+def root():
+    return {"message": "Welcome to the root route!"}
 
-# Add parent directory to path to import models.py
-sys.path.insert(0, str(Path(__file__).parent.parent))
-# Add backend directory to path
-sys.path.insert(0, str(Path(__file__).parent))
+# Route to display info for items
+@app.get("/items/")
+def items():
+    return {"message": "Welcome to the items route!"}
 
-
-Base.metadata.create_all(bind=engine)
-
-app = FastAPI(title="Pastebin Lite")
-
-# Enable CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-app.include_router(router)
+# Route to display info for updating items
+@app.get("/items/update/")
+def update_item():
+    return {"message": "Welcome to the update item route!"}
